@@ -1476,7 +1476,7 @@ function showPaywall(canDismiss) {
       <p class="paywall-sub">One time. No subscription.<br>Less than one week on a dating app.</p>
       <div class="paywall-price">$9.99</div>
       <p class="paywall-once">One-time payment</p>
-      <button class="paywall-btn" onclick="document.getElementById('paywallOverlay').remove();startCheckout();">Unlock Now →</button>
+      <button class="paywall-btn" onclick="startCheckout();">Unlock Now →</button>
       <p class="paywall-secure">🔒 Secure payment via Stripe</p>
     </div>
   `;
@@ -10325,15 +10325,24 @@ async function bootApp() {
   await recordIosPurchaseIfNeeded();
 
   // Web paywall gate: if on web and not purchased, block access immediately
-  if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost' && !APP._purchased) {
-    showPaywall(false);
+  if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost') {
+    if (!APP._purchased) {
+      showPaywall(false);
+    } else {
+      const existingPaywall = document.getElementById('paywallOverlay');
+      if (existingPaywall) existingPaywall.remove();
+    }
   }
 
   // Handle payment success redirect
   const params = new URLSearchParams(window.location.search);
   if (params.get('payment') === 'success') {
     APP._purchased = await checkPurchaseStatus();
-    if (APP._purchased) toast('Payment successful — all tools unlocked!');
+    if (APP._purchased) {
+      const paywall = document.getElementById('paywallOverlay');
+      if (paywall) paywall.remove();
+      toast('Payment successful — all tools unlocked!');
+    }
     window.history.replaceState({}, '', window.location.pathname);
     renderHome(true);
   } else if (params.get('payment') === 'cancel') {
