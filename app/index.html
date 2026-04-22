@@ -1406,6 +1406,34 @@ async function checkPurchaseStatus() {
   }
 }
 
+// iOS: write purchase row to Supabase on boot so same user gets unlocked on web.
+async function recordIosPurchaseIfNeeded() {
+  if (window.location.protocol !== 'capacitor:') return;
+  if (!currentUser || !currentUser.id) return;
+  try {
+    const token = await getSupabaseToken();
+    // Check if row already exists
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/purchases?user_id=eq.${currentUser.id}&select=id`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + token }
+    });
+    const rows = await res.json();
+    if (rows && rows.length > 0) return; // already recorded
+    // Insert row
+    await fetch(`${SUPABASE_URL}/rest/v1/purchases`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=ignore-duplicates'
+      },
+      body: JSON.stringify({ user_id: currentUser.id, source: 'app_store' })
+    });
+  } catch(e) {
+    console.error('Failed to record iOS purchase:', e);
+  }
+}
+
 async function startCheckout() {
   try {
     const token = await getSupabaseToken();
@@ -1429,17 +1457,21 @@ async function startCheckout() {
   }
 }
 
-function showPaywall() {
+function showPaywall(canDismiss) {
   // iOS: paywall is never shown — app is sold paid-upfront via Apple.
   if (window.location.protocol === 'capacitor:') return;
+  if (typeof canDismiss === 'undefined') canDismiss = true;
   const existing = document.getElementById('paywallOverlay');
   if (existing) existing.remove();
   const overlay = document.createElement('div');
   overlay.id = 'paywallOverlay';
   overlay.className = 'paywall-overlay';
+  const closeBtnHTML = canDismiss
+    ? `<button class="paywall-close" onclick="document.getElementById('paywallOverlay').remove()">&times;</button>`
+    : '';
   overlay.innerHTML = `
     <div class="paywall-card" style="position:relative;">
-      <button class="paywall-close" onclick="document.getElementById('paywallOverlay').remove()">&times;</button>
+      ${closeBtnHTML}
       <h2>Unlock <span style="color:#C4104A;">Up</span>Date</h2>
       <p class="paywall-sub">One time. No subscription.<br>Less than one week on a dating app.</p>
       <div class="paywall-price">$9.99</div>
@@ -1448,7 +1480,9 @@ function showPaywall() {
       <p class="paywall-secure">🔒 Secure payment via Stripe</p>
     </div>
   `;
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  if (canDismiss) {
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  }
   document.body.appendChild(overlay);
 }
 
@@ -9306,11 +9340,11 @@ document.addEventListener('click', (e) => {
 // Wire up tool cards (called from renderHome after they exist in DOM)
 function wireAiTools() {
   const pm = document.getElementById('toolPerfectMatch');
-  if (pm) pm.onclick = (e) => { e.stopPropagation(); if (!APP._purchased) { showPaywall(); return; } openStrategyModal(); };
+  if (pm) pm.onclick = (e) => { e.stopPropagation(); openStrategyModal(); };
   const dp = document.getElementById('toolDatingProfile');
-  if (dp) dp.onclick = (e) => { e.stopPropagation(); if (!APP._purchased) { showPaywall(); return; } runDatingProfile(); };
+  if (dp) dp.onclick = (e) => { e.stopPropagation(); runDatingProfile(); };
   const pa = document.getElementById('toolPatternAnalysis');
-  if (pa) pa.onclick = (e) => { e.stopPropagation(); if (!APP._purchased) { showPaywall(); return; } runPatternAnalysis(); };
+  if (pa) pa.onclick = (e) => { e.stopPropagation(); runPatternAnalysis(); };
 }
 
 document.addEventListener('click', (e) => {
@@ -10288,6 +10322,12 @@ async function bootApp() {
 
   // Check purchase status
   APP._purchased = await checkPurchaseStatus();
+  await recordIosPurchaseIfNeeded();
+
+  // Web paywall gate: if on web and not purchased, block access immediately
+  if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost' && !APP._purchased) {
+    showPaywall(false);
+  }
 
   // Handle payment success redirect
   const params = new URLSearchParams(window.location.search);
