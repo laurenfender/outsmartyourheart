@@ -10326,14 +10326,10 @@ async function bootApp() {
   APP._purchased = await checkPurchaseStatus();
   await recordIosPurchaseIfNeeded();
 
-  // Web paywall gate: if on web and not purchased, block access immediately
-  if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost') {
-    if (!APP._purchased) {
-      showPaywall(false);
-    } else {
-      const existingPaywall = document.getElementById('paywallOverlay');
-      if (existingPaywall) existingPaywall.remove();
-    }
+  // Web: if purchased, remove any lingering paywall from prior session
+  if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost' && APP._purchased) {
+    const existingPaywall = document.getElementById('paywallOverlay');
+    if (existingPaywall) existingPaywall.remove();
   }
 
   // Handle payment success redirect
@@ -10360,6 +10356,11 @@ function wireOneTimeListeners() {
 
   // Intro continue button
   document.getElementById('introContinueBtn')?.addEventListener('click', async () => {
+    // Web paywall gate — block transition if not purchased (iOS bypasses via capacitor: protocol)
+    if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost' && !APP._purchased) {
+      showPaywall(false);
+      return;
+    }
     localStorage.setItem(STORAGE_KEY_INTRO, '1');
     await renderHome();
     showScreen('home');
