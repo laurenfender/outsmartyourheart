@@ -9383,7 +9383,7 @@ async function runPatternAnalysis(forceRegen) {
   showScreen('pattern-analysis');
 
   // Pattern analysis cache
-  const _patCacheKey = 'pattern_v13';
+  const _patCacheKey = 'pattern_v14';
   const _patHashStr = JSON.stringify(APP.people.map(function(p){return{id:p.id,ratings:p.ratings,duration:p.duration,connectionType:p.connectionType,status:p.status};})) + JSON.stringify(APP.profiles?.[0]?.prefs) + JSON.stringify(APP.profiles?.[0]?.prios) + JSON.stringify(APP.profiles?.[0]?.goal);
   const _patHash = await computeHash(_patHashStr);
   if (!forceRegen && currentUser) {
@@ -9556,6 +9556,16 @@ CALIBRATION RULES — these are strict, follow them exactly:
 
 Use EXACTLY these section headers (all caps, on their own line):
 
+YOUR STRONGEST PATTERN
+The single most consistent signal across the history — the central insight. This should NOT be a list of recurring factors. It should name the deeper pattern that ties everything together. One headline sentence in bold, then 2-3 sentences explaining it with synthesis (not just factor recap).
+
+FORMATTING: Begin this paragraph with a bolded lead-in phrase in markdown (2-4 words, ending with a period) that names the pattern directly, like "**The commitment gap.**" or "**The effort cliff.**". Then 3-4 sentences describing the pattern with specific references to people. Keep it one paragraph, do not split further.
+
+WHAT'S WORKING
+Genuine strengths in how the user picks people. Frame positively. What instincts are sharp? What kind of person are they consistently good at finding?
+
+FORMATTING: If 2 or more strengths exist, structure them as separate short paragraphs, each beginning with a bolded lead-in in markdown (2-4 words, ending with a period, like "**Character consistency.**" or "**Values alignment.**"). Each paragraph is 1-3 sentences, specific to that strength. Maximum 3 paragraphs. If only ONE clear strength, single paragraph without bolded lead-in. If there are NO clear strengths, say so plainly in one sentence.
+
 WHAT YOU KEEP TOLERATING
 Look across all the people for behavioral or character patterns — not just factor-by-factor recaps. Synthesize: what kind of person, what dynamic, what tradeoff is the user accepting again and again? Name the underlying pattern, then point to 2-3 examples. Don't just list factors — interpret them. Be direct.
 
@@ -9571,16 +9581,6 @@ FORMATTING: If there are 2 or more distinct behavioral patterns to name, structu
 
 WHAT YOU KEEP MISSING
 Important things not being assessed across multiple people — character qualities, commitment readiness, daily compatibility — that the user keeps stepping over before committing or before walking away. What are they avoiding finding out, or finding out too late?
-
-YOUR STRONGEST PATTERN
-The single most consistent signal across the history — the central insight. This should NOT be a list of recurring factors. It should name the deeper pattern that ties everything together. One headline sentence in bold, then 2-3 sentences explaining it with synthesis (not just factor recap).
-
-FORMATTING: Begin this paragraph with a bolded lead-in phrase in markdown (2-4 words, ending with a period) that names the pattern directly, like "**The commitment gap.**" or "**The effort cliff.**". Then 3-4 sentences describing the pattern with specific references to people. Keep it one paragraph, do not split further.
-
-WHAT'S WORKING
-Genuine strengths in how the user picks people. Frame positively. What instincts are sharp? What kind of person are they consistently good at finding?
-
-FORMATTING: If 2 or more strengths exist, structure them as separate short paragraphs, each beginning with a bolded lead-in in markdown (2-4 words, ending with a period, like "**Character consistency.**" or "**Values alignment.**"). Each paragraph is 1-3 sentences, specific to that strength. Maximum 3 paragraphs. If only ONE clear strength, single paragraph without bolded lead-in. If there are NO clear strengths, say so plainly in one sentence.
 
 WHERE TO BE FLEXIBLE
 2-3 places the user's standard might be too rigid given what their actual data shows. Not "lower your standards" — but "this thing you're holding firm on may not be the deciding factor it feels like." Or, places where they're being more selective than the pattern suggests is necessary. If nothing in the data supports flexibility, say so honestly.
