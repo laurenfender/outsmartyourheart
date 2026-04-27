@@ -28,10 +28,10 @@
   .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--dark); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; padding: 16px 32px; border-radius: 100px; text-decoration: none; letter-spacing: .02em; transition: transform .2s, background .2s; opacity: 0; animation: fadeUp .7s ease .8s forwards; }
   .hero-cta:hover { background: var(--pink); transform: translateY(-2px); }
   .hero-sub { margin-top: 16px; font-size: 12px; color: var(--muted); opacity: 0; animation: fadeUp .7s ease .95s forwards; }
-  .features { padding: 100px 24px; max-width: 1000px; margin: 0 auto; }
+  .features { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
   .section-label { font-size: 11px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; color: var(--pink); text-align: center; margin-bottom: 16px; }
   .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 700; text-align: center; line-height: 1.2; margin-bottom: 64px; color: var(--dark); }
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
   .feature-card { background: #fff; border: 0.5px solid var(--border); border-radius: 20px; padding: 32px 28px; transition: transform .2s, box-shadow .2s; }
   .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(196,16,74,0.1); }
   .feature-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--border); line-height: 1; margin-bottom: 16px; }
@@ -50,6 +50,7 @@
   .notify-input:focus { border-color: var(--pink); }
   .notify-btn { width: 100%; padding: 14px; background: var(--pink); color: #fff; border: none; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .2s, transform .2s; }
   .notify-btn:hover { background: var(--dark); transform: translateY(-1px); }
+  .notify-btn:disabled { cursor: default; opacity: 0.85; }
   .notify-note { font-size: 11px; color: var(--muted); margin-top: 12px; }
   footer { padding: 40px 24px; border-top: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--dark); }
@@ -94,11 +95,16 @@
     </div>
     <div class="feature-card">
       <div class="feature-num">03</div>
+      <div class="feature-name">Profiles built from who you actually are</div>
+      <div class="feature-desc">UpDate writes bios and prompt answers for Hinge, Bumble, Tinder, Match, and more — based on your self-profile and what you're looking for. Profiles that sound like you, not the version of you who's trying to sound interesting.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">04</div>
       <div class="feature-name">Rate someone you're dating</div>
       <div class="feature-desc">Add anyone — current or past. Rate them honestly against your standards. Get an honest read on each person — what's working, what isn't, and the trade-off you're really making.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-num">04</div>
+      <div class="feature-num">05</div>
       <div class="feature-name">See your dating patterns</div>
       <div class="feature-desc">The pattern analysis pulls together everyone you've rated and reveals what you keep tolerating, what you keep missing, and what to do differently going forward.</div>
     </div>
@@ -129,16 +135,43 @@
   <p class="footer-copy">© 2026 UpDate</p>
 </footer>
 <script>
-function handleNotify() {
+const SUPABASE_URL = 'https://sjnxzhszoqfmikiycefp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqbnh6aHN6b3FmbWlraXljZWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5OTE4MjUsImV4cCI6MjA5MDU2NzgyNX0.MW9nEfQty4jkssucCSaWrkDAjAtfLclLnPEPZHNegyU';
+
+async function handleNotify() {
   const input = document.querySelector('.notify-input');
   const note = document.getElementById('notify-note');
   const btn = document.querySelector('.notify-btn');
-  if (!input.value || !input.value.includes('@')) { input.style.borderColor = '#C4104A'; input.focus(); return; }
-  btn.textContent = "You're on the list ✓";
-  btn.style.background = '#2A0A18';
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = '#C4104A';
+    input.focus();
+    return;
+  }
   btn.disabled = true;
-  input.disabled = true;
-  note.textContent = "We'll email you at " + input.value + " when iOS launches.";
+  btn.textContent = "Adding you to the list...";
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/email_signups`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email: email })
+    });
+    if (!res.ok) throw new Error('Signup failed');
+    btn.textContent = "You're on the list ✓";
+    btn.style.background = '#2A0A18';
+    input.disabled = true;
+    note.textContent = "We'll email you at " + email + " when iOS launches.";
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = "Notify me at iOS launch →";
+    note.textContent = "Something went wrong. Please try again.";
+    note.style.color = '#C4104A';
+  }
 }
 </script>
 </body>
