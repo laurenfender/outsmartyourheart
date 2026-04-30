@@ -573,43 +573,42 @@
       min-height: 0;
       height: auto;
       padding-bottom: 0;
-      flex-direction: column;
+      display: block;
     }
 
-    /* Photo becomes its own block, full aspect ratio, no cropping */
-    .hero__bg {
-      position: relative;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1638 / 922;
-      background-position: center;
-      background-size: cover;
-    }
-
-    /* Tints/overlay match photo size, not full hero */
+    /* Photo and overlays sized to photo's natural aspect ratio */
+    .hero__bg,
     .hero__pink-tint,
     .hero__pink-tint-2,
-    .hero__bg-overlay {
+    .hero__bg-overlay,
+    .hero__bottom-fade {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: auto;
-      width: 100%;
       aspect-ratio: 1638 / 922;
+      width: 100%;
+      height: auto;
     }
 
-    /* Hide bottom fade on mobile - text is now on solid pink below photo */
+    .hero__bg {
+      background-position: center;
+      background-size: cover;
+    }
+
+    /* Pink fade at bottom of photo blends into pink content section below */
     .hero__bottom-fade {
-      display: none;
+      background: linear-gradient(180deg,
+        rgba(254,239,244,0) 0%,
+        rgba(254,239,244,0) 65%,
+        rgba(254,239,244,0.7) 88%,
+        rgba(254,239,244,1) 100%);
     }
 
-    /* Nav floats on top of photo */
     .nav {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      position: relative;
+      z-index: 6;
     }
 
     .nav__brand-name {
@@ -620,20 +619,21 @@
       font-size: 12px;
     }
 
-    /* Text block sits below photo on pink background */
+    /* Content section sits below photo on pink */
     .hero__content {
       position: relative;
-      z-index: 1;
-      flex: none;
-      padding: 50px 24px 60px;
+      z-index: 6;
+      padding: 30px 24px 60px;
       background: var(--pink-bg);
       color: var(--plum);
       text-align: center;
+      flex: none;
+      margin-top: 56.3vw;
     }
 
     .hero__eyebrow {
       color: var(--raspberry);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       font-size: 11px;
       text-shadow: none;
     }
@@ -668,6 +668,78 @@
     .btn-secondary:hover {
       background: rgba(42, 10, 25, 0.08);
     }
+
+    .features-section {
+      padding: 60px 24px 60px;
+    }
+
+    .features-intro {
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 0;
+    }
+
+    .feature-card__text {
+      padding: 50px 36px;
+    }
+
+    .feature-card__visual {
+      padding: 40px 36px 50px;
+      min-height: 380px;
+    }
+
+    .card--reverse {
+      direction: ltr;
+    }
+
+    .feature-card {
+      grid-template-areas: "text" "visual";
+    }
+
+    .feature-card__text { grid-area: text; }
+    .feature-card__visual { grid-area: visual; }
+
+    .card--text-only .feature-card__text {
+      padding: 50px 30px;
+    }
+
+    .ui-snippet--tall {
+      max-height: 380px;
+    }
+
+    .ui-snippet--wide {
+      max-width: 100%;
+    }
+
+    .statement-section {
+      padding: 80px 24px;
+    }
+
+    .signup-section {
+      padding: 80px 24px;
+    }
+
+    .signup-form {
+      flex-direction: column;
+    }
+
+    .signup-form__btn {
+      width: 100%;
+    }
+
+    .footer {
+      padding: 40px 24px 30px;
+    }
+
+    .footer__inner {
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
 
     .features-section {
       padding: 60px 24px 60px;
