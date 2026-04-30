@@ -568,9 +568,15 @@
       padding: 24px 24px;
     }
 
-    /* On mobile, anchor photo to bottom-right so the woman + shoes stay visible */
+    .hero {
+      min-height: 90vh;
+      height: auto;
+      padding-bottom: 60px;
+    }
+
+    /* On mobile, anchor photo to keep woman + shoes/floor in frame */
     .hero__bg {
-      background-position: 75% 80%;
+      background-position: 75% 75%;
     }
 
     .nav__brand-name {
@@ -579,12 +585,6 @@
 
     .nav__brand-tagline {
       font-size: 12px;
-    }
-
-    .hero {
-      min-height: 0;
-      height: auto;
-      padding-bottom: 60px;
     }
 
     .hero__content {
