@@ -569,41 +569,104 @@
     }
 
     .hero {
-      min-height: 90vh;
+      aspect-ratio: auto;
+      min-height: 0;
       height: auto;
-      padding-bottom: 60px;
+      padding-bottom: 0;
+      flex-direction: column;
     }
 
-    /* On mobile, anchor photo to keep woman + shoes/floor in frame */
+    /* Photo becomes its own block, full aspect ratio, no cropping */
     .hero__bg {
-      background-position: 75% 75%;
+      position: relative;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1638 / 922;
+      background-position: center;
+      background-size: cover;
+    }
+
+    /* Tints/overlay match photo size, not full hero */
+    .hero__pink-tint,
+    .hero__pink-tint-2,
+    .hero__bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: auto;
+      width: 100%;
+      aspect-ratio: 1638 / 922;
+    }
+
+    /* Hide bottom fade on mobile - text is now on solid pink below photo */
+    .hero__bottom-fade {
+      display: none;
+    }
+
+    /* Nav floats on top of photo */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     .nav__brand-name {
-      font-size: 30px;
+      font-size: 26px;
     }
 
     .nav__brand-tagline {
       font-size: 12px;
     }
 
+    /* Text block sits below photo on pink background */
     .hero__content {
-      padding: 40px 24px 50px;
+      position: relative;
+      z-index: 1;
+      flex: none;
+      padding: 50px 24px 60px;
+      background: var(--pink-bg);
+      color: var(--plum);
+      text-align: center;
+    }
+
+    .hero__eyebrow {
+      color: var(--raspberry);
+      margin-bottom: 20px;
+      font-size: 11px;
+      text-shadow: none;
     }
 
     .hero__headline {
       font-size: clamp(40px, 12vw, 64px);
-      margin-bottom: 24px;
+      color: var(--plum);
+      margin-bottom: 20px;
+      text-shadow: none;
     }
 
     .hero__sub {
+      color: var(--plum);
+      opacity: 0.78;
       font-size: 16px;
       margin-bottom: 32px;
+      text-shadow: none;
     }
 
-    .hero__eyebrow {
-      margin-bottom: 20px;
-      font-size: 11px;
+    .hero__pricing {
+      color: var(--plum);
+      opacity: 0.6;
+      text-shadow: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--plum);
+      border-color: rgba(42, 10, 25, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(42, 10, 25, 0.08);
     }
 
     .features-section {
@@ -633,7 +696,6 @@
       direction: ltr;
     }
 
-    /* On mobile, visual goes BELOW text always */
     .feature-card {
       grid-template-areas: "text" "visual";
     }
@@ -717,7 +779,7 @@
     <h1 class="hero__headline">Outsmart your heart.</h1>
     <p class="hero__sub">UpDate isn't a dating app. It's the strategy you use before, during, and after dating — to be honest with yourself, set your standards, and stop accepting less than what you actually want.</p>
     <div class="hero__ctas">
-      <a href="/app/" class="btn btn-primary">Launch the app →</a>
+      <a href="/app/" class="btn btn-primary">Launch web app →</a>
       <a href="#notify" class="btn btn-secondary">iOS launch alert</a>
     </div>
     <p class="hero__pricing">$9.99 one-time · Lifetime access</p>
