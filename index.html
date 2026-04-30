@@ -568,47 +568,20 @@
       padding: 24px 24px;
     }
 
-    .hero {
-      aspect-ratio: auto;
-      min-height: 0;
-      height: auto;
-      padding-bottom: 0;
-      display: block;
-    }
-
-    /* Photo and overlays sized to photo's natural aspect ratio */
-    .hero__bg,
-    .hero__pink-tint,
-    .hero__pink-tint-2,
-    .hero__bg-overlay,
-    .hero__bottom-fade {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: auto;
-      aspect-ratio: 1638 / 922;
-      width: 100%;
-      height: auto;
-    }
-
+    /* Use portrait-cropped mobile version of hero photo */
     .hero__bg {
+      background-image: url("hero-photo-mobile.png");
       background-position: center;
       background-size: cover;
     }
 
-    /* Pink fade at bottom of photo blends into pink content section below */
-    .hero__bottom-fade {
-      background: linear-gradient(180deg,
-        rgba(254,239,244,0) 0%,
-        rgba(254,239,244,0) 65%,
-        rgba(254,239,244,0.7) 88%,
-        rgba(254,239,244,1) 100%);
-    }
-
-    .nav {
-      position: relative;
-      z-index: 6;
+    /* Hero is now sized to portrait aspect ratio (3:4) so photo shows fully */
+    .hero {
+      aspect-ratio: 3 / 4;
+      min-height: 600px;
+      max-height: 100vh;
+      height: auto;
+      padding-bottom: 0;
     }
 
     .nav__brand-name {
@@ -619,17 +592,96 @@
       font-size: 12px;
     }
 
-    /* Content section sits below photo on pink */
     .hero__content {
-      position: relative;
-      z-index: 6;
-      padding: 30px 24px 60px;
-      background: var(--pink-bg);
-      color: var(--plum);
-      text-align: center;
-      flex: none;
-      margin-top: 56.3vw;
+      padding: 0 24px 60px;
     }
+
+    .hero__headline {
+      font-size: clamp(40px, 12vw, 64px);
+      margin-bottom: 20px;
+    }
+
+    .hero__sub {
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 18px;
+      font-size: 11px;
+    }
+
+    .features-section {
+      padding: 60px 24px 60px;
+    }
+
+    .features-intro {
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: 0;
+    }
+
+    .feature-card__text {
+      padding: 50px 36px;
+    }
+
+    .feature-card__visual {
+      padding: 40px 36px 50px;
+      min-height: 380px;
+    }
+
+    .card--reverse {
+      direction: ltr;
+    }
+
+    .feature-card {
+      grid-template-areas: "text" "visual";
+    }
+
+    .feature-card__text { grid-area: text; }
+    .feature-card__visual { grid-area: visual; }
+
+    .card--text-only .feature-card__text {
+      padding: 50px 30px;
+    }
+
+    .ui-snippet--tall {
+      max-height: 380px;
+    }
+
+    .ui-snippet--wide {
+      max-width: 100%;
+    }
+
+    .statement-section {
+      padding: 80px 24px;
+    }
+
+    .signup-section {
+      padding: 80px 24px;
+    }
+
+    .signup-form {
+      flex-direction: column;
+    }
+
+    .signup-form__btn {
+      width: 100%;
+    }
+
+    .footer {
+      padding: 40px 24px 30px;
+    }
+
+    .footer__inner {
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
 
     .hero__eyebrow {
       color: var(--raspberry);
