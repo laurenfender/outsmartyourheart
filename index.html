@@ -44,9 +44,7 @@
 
   img { max-width: 100%; height: auto; display: block; }
 
-  /* ========================================
-     HERO
-     ======================================== */
+  /* HERO */
   .hero {
     position: relative;
     width: 100%;
@@ -244,9 +242,7 @@
     background: rgba(255, 255, 255, 0.22);
   }
 
-  /* ========================================
-     FEATURES SECTION
-     ======================================== */
+  /* FEATURES */
   .features-section {
     background: var(--pink-bg);
     padding: 80px 56px 80px;
@@ -259,19 +255,9 @@
     text-align: center;
   }
 
-  .features-intro__eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--raspberry);
-    margin-bottom: 24px;
-  }
-
   .features-intro__headline {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 4.5vw, 64px);
+    font-size: clamp(40px, 4.5vw, 64px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -285,30 +271,31 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 480px;
+    height: 460px;
     box-shadow: 0 30px 60px -20px rgba(42, 10, 25, 0.18);
   }
 
   .feature-card__text {
-    padding: 70px 70px;
+    padding: 60px 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
   }
 
   .feature-card__heading {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 3vw, 46px);
+    font-size: clamp(28px, 2.6vw, 38px);
     font-weight: 700;
-    line-height: 1.12;
+    line-height: 1.15;
     letter-spacing: -0.02em;
-    margin-bottom: 28px;
+    margin-bottom: 22px;
   }
 
   .feature-card__desc {
     font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.6;
     max-width: 440px;
   }
 
@@ -317,11 +304,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 50px;
+    padding: 40px;
     overflow: hidden;
   }
 
-  /* Color variants */
   .card--plum { background: var(--plum); color: var(--cream); }
   .card--plum .feature-card__heading { color: var(--cream); }
   .card--plum .feature-card__desc { color: rgba(250, 243, 231, 0.78); }
@@ -330,17 +316,15 @@
   .card--raspberry .feature-card__heading { color: var(--cream); }
   .card--raspberry .feature-card__desc { color: rgba(250, 243, 231, 0.85); }
 
-  /* Layout flip */
   .card--reverse { direction: rtl; }
   .card--reverse > * { direction: ltr; }
 
-  /* Snippet images — all sized by height to fill the card visual area */
   .ui-snippet--tall,
   .ui-snippet--wide {
-    height: 100%;
+    max-width: 90%;
+    max-height: 100%;
     width: auto;
-    max-width: 100%;
-    max-height: 380px;
+    height: auto;
     object-fit: contain;
     transform: rotate(-2deg);
     position: relative;
@@ -350,43 +334,32 @@
   .ui-snippet--tall.right,
   .ui-snippet--wide.right { transform: rotate(2deg); }
 
-  /* Card 3 — text-only */
-  .card--text-only {
-    grid-template-columns: 1fr;
-  }
+  .card--text-only { grid-template-columns: 1fr; }
 
   .card--text-only .feature-card__text {
-    padding: 70px 100px;
+    padding: 60px 80px;
     text-align: center;
     align-items: center;
   }
 
   .card--text-only .feature-card__heading {
     max-width: 800px;
-    font-size: clamp(34px, 3.5vw, 54px);
+    font-size: clamp(32px, 3vw, 46px);
   }
 
-  .card--text-only .feature-card__desc {
-    max-width: 640px;
-  }
+  .card--text-only .feature-card__desc { max-width: 640px; }
 
-  /* ========================================
-     STATEMENT SECTION
-     ======================================== */
+  /* STATEMENT */
   .statement-section {
     background: var(--plum);
     color: var(--cream);
     padding: 140px 56px;
-    position: relative;
-    overflow: hidden;
   }
 
   .statement-section__inner {
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
-    position: relative;
-    z-index: 2;
   }
 
   .statement-section__text {
@@ -403,9 +376,7 @@
     color: var(--raspberry);
   }
 
-  /* ========================================
-     iOS SIGNUP SECTION
-     ======================================== */
+  /* SIGNUP */
   .signup-section {
     background: var(--pink-bg);
     color: var(--plum);
@@ -474,26 +445,17 @@
   .signup-form__input::placeholder { color: rgba(42, 10, 25, 0.4); }
   .signup-form__input:disabled { opacity: 0.7; }
 
-  .signup-form__btn {
-    flex-shrink: 0;
-  }
-
-  .signup-form__btn:disabled {
-    cursor: default;
-    opacity: 0.85;
-  }
+  .signup-form__btn { flex-shrink: 0; }
+  .signup-form__btn:disabled { cursor: default; opacity: 0.85; }
 
   .signup-section__note {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     color: var(--plum);
     opacity: 0.5;
-    transition: color 0.2s ease;
   }
 
-  /* ========================================
-     FOOTER
-     ======================================== */
+  /* FOOTER */
   .footer {
     background: var(--plum);
     color: var(--cream);
@@ -560,305 +522,79 @@
     letter-spacing: 0.08em;
   }
 
-  /* ========================================
-     RESPONSIVE
-     ======================================== */
+  /* MOBILE */
   @media (max-width: 900px) {
-    .nav {
-      padding: 24px 24px;
+    .nav { padding: 20px 24px; }
+
+    .hero {
+      aspect-ratio: 3 / 4;
+      min-height: 0;
+      max-height: 95vh;
     }
 
-    /* Use portrait-cropped mobile version of hero photo */
     .hero__bg {
       background-image: url("hero-photo-mobile.png");
       background-position: center;
-      background-size: cover;
     }
 
-    /* Hero is now sized to portrait aspect ratio (3:4) so photo shows fully */
-    .hero {
-      aspect-ratio: 3 / 4;
-      min-height: 600px;
-      max-height: 100vh;
-      height: auto;
-      padding-bottom: 0;
-    }
+    .nav__brand-name { font-size: 26px; }
+    .nav__brand-tagline { font-size: 12px; }
 
-    .nav__brand-name {
-      font-size: 26px;
-    }
-
-    .nav__brand-tagline {
-      font-size: 12px;
-    }
-
-    .hero__content {
-      padding: 0 24px 60px;
-    }
+    .hero__content { padding: 0 24px 40px; }
 
     .hero__headline {
-      font-size: clamp(40px, 12vw, 64px);
-      margin-bottom: 20px;
+      font-size: clamp(36px, 10vw, 56px);
+      margin-bottom: 18px;
     }
 
     .hero__sub {
-      font-size: 16px;
-      margin-bottom: 32px;
+      font-size: 15px;
+      margin-bottom: 28px;
     }
 
     .hero__eyebrow {
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       font-size: 11px;
     }
 
-    .features-section {
-      padding: 60px 24px 60px;
-    }
-
-    .features-intro {
-      margin-bottom: 60px;
-    }
+    .features-section { padding: 60px 20px 60px; }
+    .features-intro { margin-bottom: 50px; }
 
     .feature-card {
       grid-template-columns: 1fr;
+      grid-template-areas: "text" "visual";
       height: auto;
-      min-height: 0;
     }
 
     .feature-card__text {
-      padding: 50px 36px;
+      grid-area: text;
+      padding: 40px 30px;
     }
 
     .feature-card__visual {
-      padding: 40px 36px 50px;
-      min-height: 380px;
+      grid-area: visual;
+      padding: 20px 30px 50px;
+      min-height: 320px;
     }
 
-    .card--reverse {
-      direction: ltr;
-    }
-
-    .feature-card {
-      grid-template-areas: "text" "visual";
-    }
-
-    .feature-card__text { grid-area: text; }
-    .feature-card__visual { grid-area: visual; }
+    .card--reverse { direction: ltr; }
 
     .card--text-only .feature-card__text {
       padding: 50px 30px;
     }
 
-    .ui-snippet--tall {
-      max-height: 380px;
-    }
-
+    .ui-snippet--tall,
     .ui-snippet--wide {
-      max-width: 100%;
+      max-height: 280px;
     }
 
-    .statement-section {
-      padding: 80px 24px;
-    }
+    .statement-section { padding: 80px 24px; }
+    .signup-section { padding: 80px 24px; }
 
-    .signup-section {
-      padding: 80px 24px;
-    }
+    .signup-form { flex-direction: column; }
+    .signup-form__btn { width: 100%; }
 
-    .signup-form {
-      flex-direction: column;
-    }
-
-    .signup-form__btn {
-      width: 100%;
-    }
-
-    .footer {
-      padding: 40px 24px 30px;
-    }
-
-    .footer__inner {
-      flex-direction: column;
-      gap: 24px;
-    }
-  }
-
-    .hero__eyebrow {
-      color: var(--raspberry);
-      margin-bottom: 18px;
-      font-size: 11px;
-      text-shadow: none;
-    }
-
-    .hero__headline {
-      font-size: clamp(40px, 12vw, 64px);
-      color: var(--plum);
-      margin-bottom: 20px;
-      text-shadow: none;
-    }
-
-    .hero__sub {
-      color: var(--plum);
-      opacity: 0.78;
-      font-size: 16px;
-      margin-bottom: 32px;
-      text-shadow: none;
-    }
-
-    .hero__pricing {
-      color: var(--plum);
-      opacity: 0.6;
-      text-shadow: none;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--plum);
-      border-color: rgba(42, 10, 25, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(42, 10, 25, 0.08);
-    }
-
-    .features-section {
-      padding: 60px 24px 60px;
-    }
-
-    .features-intro {
-      margin-bottom: 60px;
-    }
-
-    .feature-card {
-      grid-template-columns: 1fr;
-      height: auto;
-      min-height: 0;
-    }
-
-    .feature-card__text {
-      padding: 50px 36px;
-    }
-
-    .feature-card__visual {
-      padding: 40px 36px 50px;
-      min-height: 380px;
-    }
-
-    .card--reverse {
-      direction: ltr;
-    }
-
-    .feature-card {
-      grid-template-areas: "text" "visual";
-    }
-
-    .feature-card__text { grid-area: text; }
-    .feature-card__visual { grid-area: visual; }
-
-    .card--text-only .feature-card__text {
-      padding: 50px 30px;
-    }
-
-    .ui-snippet--tall {
-      max-height: 380px;
-    }
-
-    .ui-snippet--wide {
-      max-width: 100%;
-    }
-
-    .statement-section {
-      padding: 80px 24px;
-    }
-
-    .signup-section {
-      padding: 80px 24px;
-    }
-
-    .signup-form {
-      flex-direction: column;
-    }
-
-    .signup-form__btn {
-      width: 100%;
-    }
-
-    .footer {
-      padding: 40px 24px 30px;
-    }
-
-    .footer__inner {
-      flex-direction: column;
-      gap: 24px;
-    }
-  }
-
-    .features-section {
-      padding: 60px 24px 60px;
-    }
-
-    .features-intro {
-      margin-bottom: 60px;
-    }
-
-    .feature-card {
-      grid-template-columns: 1fr;
-      height: auto;
-      min-height: 0;
-    }
-
-    .feature-card__text {
-      padding: 50px 36px;
-    }
-
-    .feature-card__visual {
-      padding: 40px 36px 50px;
-      min-height: 380px;
-    }
-
-    .card--reverse {
-      direction: ltr;
-    }
-
-    .feature-card {
-      grid-template-areas: "text" "visual";
-    }
-
-    .feature-card__text { grid-area: text; }
-    .feature-card__visual { grid-area: visual; }
-
-    .card--text-only .feature-card__text {
-      padding: 50px 30px;
-    }
-
-    .ui-snippet--tall {
-      max-height: 380px;
-    }
-
-    .ui-snippet--wide {
-      max-width: 100%;
-    }
-
-    .statement-section {
-      padding: 80px 24px;
-    }
-
-    .signup-section {
-      padding: 80px 24px;
-    }
-
-    .signup-form {
-      flex-direction: column;
-    }
-
-    .signup-form__btn {
-      width: 100%;
-    }
-
-    .footer {
-      padding: 40px 24px 30px;
-    }
-
+    .footer { padding: 40px 24px 30px; }
     .footer__inner {
       flex-direction: column;
       gap: 24px;
@@ -882,7 +618,6 @@
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero__bg"></div>
   <div class="hero__pink-tint"></div>
@@ -910,13 +645,11 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <section class="features-section">
   <div class="features-intro">
     <h2 class="features-intro__headline">How it works.</h2>
   </div>
 
-  <!-- CARD 1 — Plum, text left, snippet right -->
   <article class="feature-card card--plum">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">Be honest about yourself — and set your standards.</h3>
@@ -927,7 +660,6 @@
     </div>
   </article>
 
-  <!-- CARD 2 — Raspberry, snippet LEFT, text RIGHT -->
   <article class="feature-card card--raspberry card--reverse">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">Get your dating strategy.</h3>
@@ -938,7 +670,6 @@
     </div>
   </article>
 
-  <!-- CARD 3 — Plum, text-only -->
   <article class="feature-card card--plum card--text-only">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">Profiles built from who you actually are.</h3>
@@ -946,7 +677,6 @@
     </div>
   </article>
 
-  <!-- CARD 4 — Raspberry, snippet LEFT, text RIGHT -->
   <article class="feature-card card--raspberry card--reverse">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">Rate someone you're dating.</h3>
@@ -957,7 +687,6 @@
     </div>
   </article>
 
-  <!-- CARD 5 — Plum, text left, snippet right -->
   <article class="feature-card card--plum">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">See your dating patterns.</h3>
@@ -969,14 +698,12 @@
   </article>
 </section>
 
-<!-- STATEMENT -->
 <section class="statement-section">
   <div class="statement-section__inner">
     <p class="statement-section__text">Date <em>better</em>.</p>
   </div>
 </section>
 
-<!-- iOS SIGNUP -->
 <section class="signup-section" id="notify">
   <div class="signup-section__inner">
     <p class="signup-section__eyebrow">Coming to iOS</p>
@@ -990,7 +717,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__left">
