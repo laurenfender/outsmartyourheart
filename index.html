@@ -530,15 +530,21 @@
     .nav { padding: 20px 24px; }
 
     .hero {
-      aspect-ratio: 1638 / 922;
-      min-height: 0;
+      aspect-ratio: auto;
+      min-height: 90vh;
       max-height: none;
+      height: auto;
+    }
+
+    /* Anchor photo to show the woman + champagne side */
+    .hero__bg {
+      background-position: 72% center;
     }
 
     .nav__brand-name { font-size: 26px; }
     .nav__brand-tagline { font-size: 12px; }
 
-    .hero__content { padding: 0 24px 30px; }
+    .hero__content { padding: 0 24px 60px; }
 
     .hero__headline {
       font-size: clamp(36px, 10vw, 56px);
