@@ -321,9 +321,10 @@
 
   .ui-snippet--tall,
   .ui-snippet--wide {
-    height: 360px;
-    width: auto;
     max-width: 90%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
     object-fit: contain;
     transform: rotate(-2deg);
     position: relative;
@@ -529,20 +530,15 @@
     .nav { padding: 20px 24px; }
 
     .hero {
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 1638 / 922;
       min-height: 0;
-      max-height: 95vh;
-    }
-
-    .hero__bg {
-      background-image: url("hero-photo-mobile.png");
-      background-position: center;
+      max-height: none;
     }
 
     .nav__brand-name { font-size: 26px; }
     .nav__brand-tagline { font-size: 12px; }
 
-    .hero__content { padding: 0 24px 40px; }
+    .hero__content { padding: 0 24px 30px; }
 
     .hero__headline {
       font-size: clamp(36px, 10vw, 56px);
