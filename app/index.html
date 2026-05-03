@@ -3599,6 +3599,8 @@ document.addEventListener('click', (e) => {
 
 document.getElementById('personFormSave')?.addEventListener('click', async () => {
   if (!editPerson.name) { toast('Add a name'); return; }
+  if (!editPerson.age || editPerson.age === '') { toast('Add their age'); return; }
+  if (!editPerson.heightIn || editPerson.heightIn === '') { toast('Add their height'); return; }
   APP.people = await loadPeople();
   const idx = APP.people.findIndex(p => p.id === editPerson.id);
   const isNew = idx < 0;
