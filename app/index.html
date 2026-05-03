@@ -1507,7 +1507,7 @@ async function handleSignOut() {
   _userRowEnsured = false;
   if (typeof _appBooted !== 'undefined') _appBooted = false;
   APP = { profiles: [], people: [], self: null, activeProfileId: null, activePersonId: null, compareIds: [], editingProfileId: null, peopleSort: 'alpha', _purchased: false };
-  showScreen('login');
+  showScreen('intro');
 }
 
 function showDeleteAccountDialog() {
@@ -10322,7 +10322,7 @@ async function init() {
     _appBooted = true;
     await bootApp();
   } else {
-    showScreen('login');
+    showScreen('intro');
   }
 
   // Listen for auth changes — only navigate on actual sign-in/out transitions
@@ -10330,7 +10330,7 @@ async function init() {
     if (event === 'SIGNED_OUT') {
       currentUser = null;
       _appBooted = false;
-      showScreen('login');
+      showScreen('intro');
     } else if (event === 'SIGNED_IN' && session && !_appBooted) {
       // Only boot on fresh sign-in, not token refresh or session restore
       currentUser = session.user;
@@ -10386,8 +10386,12 @@ function wireOneTimeListeners() {
 
   // Intro continue button
   document.getElementById('introContinueBtn')?.addEventListener('click', async () => {
-    // Paywall is no longer at intro — users can build their profile + standards before paying.
-    // Paywall now triggers when accessing strategy / dating tools / patterns (in showScreen).
+    // If user isn't signed in yet, send them to email signup
+    if (!currentUser) {
+      showScreen('login');
+      return;
+    }
+    // Authenticated user finishing intro: mark intro as seen, go to home
     localStorage.setItem(STORAGE_KEY_INTRO, '1');
     await renderHome();
     showScreen('home');
