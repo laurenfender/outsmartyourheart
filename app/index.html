@@ -10386,13 +10386,14 @@ function wireOneTimeListeners() {
 
   // Intro continue button
   document.getElementById('introContinueBtn')?.addEventListener('click', async () => {
+    // Mark intro as seen so user doesn't see it again post-signup
+    localStorage.setItem(STORAGE_KEY_INTRO, '1');
     // If user isn't signed in yet, send them to email signup
     if (!currentUser) {
       showScreen('login');
       return;
     }
-    // Authenticated user finishing intro: mark intro as seen, go to home
-    localStorage.setItem(STORAGE_KEY_INTRO, '1');
+    // Authenticated user finishing intro: go to home
     await renderHome();
     showScreen('home');
   });
