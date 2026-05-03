@@ -1911,6 +1911,17 @@ const PICKER_GROUPS = [
 // SCREEN NAVIGATION
 // ══════════════════════════════════════════════════════
 function showScreen(id) {
+  // Paywall gate: these screens require a paid account on web.
+  // iOS bypasses (paid upfront via App Store), localhost bypasses (dev).
+  const PAID_SCREENS = ['perfect-match', 'dating-profile', 'pattern-analysis', 'compare', 'person-detail'];
+  if (PAID_SCREENS.includes(id)
+      && window.location.protocol !== 'capacitor:'
+      && window.location.hostname !== 'localhost'
+      && !APP._purchased) {
+    showPaywall(true);
+    return;
+  }
+
   const target = document.getElementById('screen-'+id);
   if (!target) {
     console.error('showScreen: no screen with id "screen-' + id + '"');
@@ -10375,11 +10386,8 @@ function wireOneTimeListeners() {
 
   // Intro continue button
   document.getElementById('introContinueBtn')?.addEventListener('click', async () => {
-    // Web paywall gate — block transition if not purchased (iOS bypasses via capacitor: protocol)
-    if (window.location.protocol !== 'capacitor:' && window.location.hostname !== 'localhost' && !APP._purchased) {
-      showPaywall(false);
-      return;
-    }
+    // Paywall is no longer at intro — users can build their profile + standards before paying.
+    // Paywall now triggers when accessing strategy / dating tools / patterns (in showScreen).
     localStorage.setItem(STORAGE_KEY_INTRO, '1');
     await renderHome();
     showScreen('home');
