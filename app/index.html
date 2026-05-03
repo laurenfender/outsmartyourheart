@@ -1460,6 +1460,36 @@ async function startCheckout() {
   }
 }
 
+// Set password (so user can sign back in later), then proceed to Stripe checkout
+async function setPasswordAndCheckout() {
+  const passwordInput = document.getElementById('paywallPassword');
+  const errorEl = document.getElementById('paywallError');
+  const btnEl = document.getElementById('paywallBtn');
+  const password = passwordInput?.value || '';
+
+  errorEl.textContent = '';
+  if (password.length < 6) {
+    errorEl.textContent = 'Password must be at least 6 characters';
+    return;
+  }
+
+  btnEl.disabled = true;
+  btnEl.textContent = 'Setting up...';
+
+  try {
+    // Update the user's password on Supabase
+    const { error } = await sb.auth.updateUser({ password: password });
+    if (error) throw error;
+    // Proceed to Stripe checkout
+    await startCheckout();
+  } catch(e) {
+    console.error('Password update failed:', e);
+    errorEl.textContent = e.message || 'Could not save password. Try again.';
+    btnEl.disabled = false;
+    btnEl.textContent = 'Unlock Now →';
+  }
+}
+
 function showPaywall(canDismiss) {
   // iOS: paywall is never shown — app is sold paid-upfront via Apple.
   if (window.location.protocol === 'capacitor:') return;
@@ -1479,7 +1509,12 @@ function showPaywall(canDismiss) {
       <p class="paywall-sub">One time. No subscription.<br>Less than one week on a dating app.</p>
       <div class="paywall-price">$9.99</div>
       <p class="paywall-once">One-time payment</p>
-      <button class="paywall-btn" onclick="startCheckout();">Unlock Now →</button>
+      <div style="margin:18px 0 4px;">
+        <label style="display:block;font-size:12px;color:#5C4A52;margin-bottom:6px;text-align:left;font-family:'Space Grotesk',sans-serif;">Set a password so you can sign back in later:</label>
+        <input id="paywallPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
+        <div id="paywallError" style="font-size:12px;color:#C4104A;min-height:18px;margin-top:6px;text-align:left;line-height:1.4;"></div>
+      </div>
+      <button id="paywallBtn" class="paywall-btn" onclick="setPasswordAndCheckout();">Unlock Now →</button>
       <p class="paywall-secure">🔒 Secure payment via Stripe</p>
     </div>
   `;
