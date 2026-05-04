@@ -951,11 +951,11 @@ circle.ring-arc{fill:none;stroke-width:5;stroke-linecap:round;transform:rotate(-
       <h1 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;font-style:italic;color:#2A0A18;line-height:1.4;margin-bottom:32px;">Outsmart your heart.<br>Curate your fate.</h1>
       <form id="loginForm" style="display:flex;flex-direction:column;gap:12px;">
         <div id="loginHeading" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#2A0A18;">Get started</div>
-        <div id="loginSubheading" style="font-family:'Space Grotesk',sans-serif;font-size:13px;color:#5C4A52;line-height:1.5;margin-bottom:4px;">Just your email to start. Build your profile, set your standards, then unlock your strategy.</div>
+        <div id="loginSubheading" style="font-family:'Space Grotesk',sans-serif;font-size:13px;color:#5C4A52;line-height:1.5;margin-bottom:4px;">Create your account so your work saves and you can come back anytime.</div>
         <input id="loginEmail" type="email" placeholder="Email" required style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
-        <input id="loginPassword" type="password" placeholder="Password" minlength="6" style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;display:none;">
+        <input id="loginPassword" type="password" placeholder="Password (6+ characters)" required minlength="6" style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
         <div id="loginError" style="font-size:12px;color:#C4104A;min-height:18px;line-height:1.5;"></div>
-        <button id="loginSubmit" type="submit" style="width:100%;padding:15px;background:#C4104A;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;">Start →</button>
+        <button id="loginSubmit" type="submit" style="width:100%;padding:15px;background:#C4104A;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;">Create Account →</button>
         <div style="text-align:center;margin-top:4px;">
           <a href="#" id="loginToggle" style="font-size:13px;color:#C4104A;text-decoration:none;font-family:'Space Grotesk',sans-serif;">Already have an account? Sign in</a>
         </div>
@@ -1519,12 +1519,7 @@ function showPaywall(canDismiss) {
       <p class="paywall-sub">One time. No subscription.<br>Less than one week on a dating app.</p>
       <div class="paywall-price">$9.99</div>
       <p class="paywall-once">One-time payment</p>
-      <div style="margin:18px 0 4px;">
-        <label style="display:block;font-size:12px;color:#5C4A52;margin-bottom:6px;text-align:left;font-family:'Space Grotesk',sans-serif;">Set a password so you can sign back in later:</label>
-        <input id="paywallPassword" type="password" placeholder="Password (6+ characters)" minlength="6" required style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
-        <div id="paywallError" style="font-size:12px;color:#C4104A;min-height:18px;margin-top:6px;text-align:left;line-height:1.4;"></div>
-      </div>
-      <button id="paywallBtn" class="paywall-btn" onclick="setPasswordAndCheckout();">Unlock Now →</button>
+      <button class="paywall-btn" onclick="startCheckout();">Unlock Now →</button>
       <p class="paywall-secure">🔒 Secure payment via Stripe</p>
     </div>
   `;
@@ -1552,6 +1547,9 @@ async function handleSignOut() {
   _userRowEnsured = false;
   if (typeof _appBooted !== 'undefined') _appBooted = false;
   APP = { profiles: [], people: [], self: null, activeProfileId: null, activePersonId: null, compareIds: [], editingProfileId: null, peopleSort: 'alpha', _purchased: false };
+  // Clear local progress so next user starts fresh
+  localStorage.removeItem('update_combo_step');
+  localStorage.removeItem(STORAGE_KEY_INTRO);
   showScreen('intro');
 }
 
@@ -10494,29 +10492,26 @@ function wireOneTimeListeners() {
   const headingEl = document.getElementById('loginHeading');
   const subheadingEl = document.getElementById('loginSubheading');
   const passwordInput = document.getElementById('loginPassword');
-  // Default mode: signup (email-only, no password field shown)
+  // Default mode: signup (Create Account)
   let isSignIn = false;
 
   toggleBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     isSignIn = !isSignIn;
     if (isSignIn) {
-      // Sign-in mode: show password field, ask for both
+      // Sign-in mode
       headingEl.textContent = 'Welcome back';
       if (subheadingEl) subheadingEl.style.display = 'none';
-      passwordInput.style.display = '';
-      passwordInput.required = true;
       submitBtn.textContent = 'Sign in →';
-      toggleBtn.textContent = "New here? Get started";
+      toggleBtn.textContent = "New here? Create an account";
+      passwordInput.placeholder = 'Password';
     } else {
-      // Signup mode: email only, no password
+      // Signup mode (Create Account)
       headingEl.textContent = 'Get started';
       if (subheadingEl) subheadingEl.style.display = '';
-      passwordInput.style.display = 'none';
-      passwordInput.required = false;
-      passwordInput.value = '';
-      submitBtn.textContent = 'Start →';
+      submitBtn.textContent = 'Create Account →';
       toggleBtn.textContent = 'Already have an account? Sign in';
+      passwordInput.placeholder = 'Password (6+ characters)';
     }
     errorEl.textContent = '';
   });
@@ -10527,24 +10522,22 @@ function wireOneTimeListeners() {
     const password = passwordInput.value;
     errorEl.textContent = '';
     submitBtn.disabled = true;
-    submitBtn.textContent = isSignIn ? 'Signing in...' : 'Starting...';
+    submitBtn.textContent = isSignIn ? 'Signing in...' : 'Creating...';
     try {
       if (isSignIn) {
-        // Returning user: real sign-in with password
         await handleSignIn(email, password);
       } else {
-        // New user: email-only signup with auto-generated placeholder password
-        // The user will set a real password at the paywall when they purchase
-        const tempPassword = 'temp-' + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
-        await handleSignUp(email, tempPassword);
+        // New account: clear any leftover progress from previous browser session
+        localStorage.removeItem('update_combo_step');
+        await handleSignUp(email, password);
         // Email confirmation is disabled in Supabase, so auto-sign-in immediately
-        await handleSignIn(email, tempPassword);
+        await handleSignIn(email, password);
       }
     } catch(err) {
       errorEl.style.color = 'var(--accent)';
       errorEl.textContent = err.message || 'Something went wrong';
       submitBtn.disabled = false;
-      submitBtn.textContent = isSignIn ? 'Sign in →' : 'Start →';
+      submitBtn.textContent = isSignIn ? 'Sign in →' : 'Create Account →';
     }
   });
 }
