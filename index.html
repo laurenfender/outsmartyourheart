@@ -47,6 +47,8 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="hero-photo.webp" type="image/webp" media="(min-width: 768px)">
+<link rel="preload" as="image" href="hero-photo-mobile.webp" type="image/webp" media="(max-width: 767px)">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
@@ -85,7 +87,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
   .hero__bg {
     position: absolute; inset: 0;
-    background-image: url("hero-photo.png");
+    background-image: image-set(url("hero-photo.webp") type("image/webp"), url("hero-photo.png") type("image/png"));
     background-size: cover;
     background-position: center;
     z-index: 1;
@@ -579,9 +581,10 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
       height: auto;
     }
 
-    /* Anchor photo to show the woman + champagne side */
+    /* Anchor photo to show the woman + champagne side, use smaller image on mobile */
     .hero__bg {
       background-position: 72% center;
+      background-image: image-set(url("hero-photo-mobile.webp") type("image/webp"), url("hero-photo.png") type("image/png"));
     }
 
     .nav__brand-name { font-size: 26px; }
