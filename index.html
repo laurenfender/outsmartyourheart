@@ -90,7 +90,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
     position: absolute; inset: 0;
     background-image: image-set(url("hero-photo.webp") type("image/webp"), url("hero-photo.png") type("image/png"));
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     z-index: 1;
   }
 
@@ -556,83 +556,27 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
     color: var(--raspberry);
   }
 
-  /* SIGNUP */
-  .signup-section {
+  /* FINAL CTA */
+  .final-cta {
     background: var(--pink-bg);
     color: var(--plum);
     padding: 140px 56px;
-  }
-
-  .signup-section__inner {
-    max-width: 720px;
-    margin: 0 auto;
     text-align: center;
   }
 
-  .signup-section__eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--raspberry);
-    margin-bottom: 24px;
+  .final-cta__inner {
+    max-width: 720px;
+    margin: 0 auto;
   }
 
-  .signup-section__headline {
+  .final-cta__headline {
     font-family: 'Playfair Display', serif;
     font-size: clamp(36px, 4.5vw, 64px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--plum);
-    margin-bottom: 20px;
-  }
-
-  .signup-section__sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 17px;
-    line-height: 1.55;
-    color: var(--plum);
-    opacity: 0.75;
-    max-width: 540px;
-    margin: 0 auto 40px;
-  }
-
-  .signup-form {
-    display: flex;
-    gap: 12px;
-    max-width: 540px;
-    margin: 0 auto 18px;
-    flex-wrap: wrap;
-  }
-
-  .signup-form__input {
-    flex: 1;
-    min-width: 240px;
-    padding: 17px 24px;
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    background: white;
-    border: 1px solid rgba(42, 10, 25, 0.15);
-    border-radius: 100px;
-    color: var(--plum);
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  .signup-form__input:focus { border-color: var(--raspberry); }
-  .signup-form__input::placeholder { color: rgba(42, 10, 25, 0.4); }
-  .signup-form__input:disabled { opacity: 0.7; }
-
-  .signup-form__btn { flex-shrink: 0; }
-  .signup-form__btn:disabled { cursor: default; opacity: 0.85; }
-
-  .signup-section__note {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--plum);
-    opacity: 0.5;
+    margin-bottom: 36px;
   }
 
   /* FOOTER */
@@ -715,7 +659,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
     /* Anchor photo to show the woman + champagne side, use smaller image on mobile */
     .hero__bg {
-      background-position: 72% center;
+      background-position: 72% top;
       background-image: image-set(url("hero-photo-mobile.webp") type("image/webp"), url("hero-photo.png") type("image/png"));
     }
 
@@ -786,10 +730,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
     }
 
     .statement-section { padding: 80px 24px; }
-    .signup-section { padding: 80px 24px; }
-
-    .signup-form { flex-direction: column; }
-    .signup-form__btn { width: 100%; }
+    .final-cta { padding: 80px 24px; }
 
     .footer { padding: 40px 24px 30px; }
     .footer__inner {
@@ -932,20 +873,14 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
 <section class="statement-section">
   <div class="statement-section__inner">
-    <p class="statement-section__text">Date with <em>clarity</em>.</p>
+    <p class="statement-section__text"><em>Outsmart</em> your heart.</p>
   </div>
 </section>
 
-<section class="signup-section" id="notify">
-  <div class="signup-section__inner">
-    <p class="signup-section__eyebrow">Coming to iOS</p>
-    <h2 class="signup-section__headline">Want UpDate on your phone?</h2>
-    <p class="signup-section__sub">UpDate is on the web now. iOS launches soon. Leave your email and we'll let you know the moment it's in the App Store.</p>
-    <form class="signup-form" onsubmit="handleNotify(event); return false;">
-      <input type="email" id="notify-email" class="signup-form__input" placeholder="your@email.com" required>
-      <button type="submit" id="notify-btn" class="btn btn-primary signup-form__btn">Notify me →</button>
-    </form>
-    <p class="signup-section__note" id="notify-note">No spam. Just one email when iOS goes live.</p>
+<section class="final-cta">
+  <div class="final-cta__inner">
+    <h2 class="final-cta__headline">Ready to date with clarity?</h2>
+    <a href="/app/" class="btn btn-primary">Try it now →</a>
   </div>
 </section>
 
@@ -963,54 +898,6 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
   </div>
   <p class="footer__copyright">© 2026 Outsmart Your Heart LLC</p>
 </footer>
-
-<script>
-const SUPABASE_URL = 'https://sjnxzhszoqfmikiycefp.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqbnh6aHN6b3FmbWlraXljZWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5OTE4MjUsImV4cCI6MjA5MDU2NzgyNX0.MW9nEfQty4jkssucCSaWrkDAjAtfLclLnPEPZHNegyU';
-
-async function handleNotify(event) {
-  if (event) event.preventDefault();
-  const input = document.getElementById('notify-email');
-  const note = document.getElementById('notify-note');
-  const btn = document.getElementById('notify-btn');
-  const email = input.value.trim();
-
-  if (!email || !email.includes('@')) {
-    input.style.borderColor = '#c3104a';
-    input.focus();
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = "Adding you to the list...";
-
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/email_signups`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email: email })
-    });
-
-    if (!res.ok) throw new Error('Signup failed');
-
-    btn.textContent = "You're on the list ✓";
-    btn.style.background = 'var(--plum)';
-    input.disabled = true;
-    note.textContent = "We'll email you at " + email + " when iOS launches.";
-    note.style.color = '';
-  } catch (e) {
-    btn.disabled = false;
-    btn.textContent = "Notify me →";
-    note.textContent = "Something went wrong. Please try again.";
-    note.style.color = '#c3104a';
-  }
-}
-</script>
 
 </body>
 </html>
