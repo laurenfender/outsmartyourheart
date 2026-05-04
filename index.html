@@ -78,8 +78,9 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
   .hero {
     position: relative;
     width: 100%;
-    aspect-ratio: 1638 / 922;
-    min-height: 600px;
+    height: 75vh;
+    min-height: 480px;
+    max-height: 700px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -287,6 +288,77 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
     background: rgba(255, 255, 255, 0.22);
   }
 
+  /* STEPS — How it works */
+  .steps-section {
+    background: var(--cream);
+    padding: 80px 56px;
+    color: var(--plum);
+  }
+
+  .steps-section__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .steps-section__headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--plum);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .steps-section__sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--plum);
+    opacity: 0.78;
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .step {
+    text-align: left;
+  }
+
+  .step__number {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--raspberry);
+    line-height: 1;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .step__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--plum);
+    margin-bottom: 12px;
+  }
+
+  .step__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--plum);
+    opacity: 0.78;
+  }
+
   /* FEATURES */
   .features-section {
     background: var(--pink-bg);
@@ -396,6 +468,66 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
   }
 
   .card--text-only .feature-card__desc { max-width: 640px; }
+
+  /* FOUNDER STORY */
+  .founder-section {
+    background: var(--cream);
+    padding: 100px 56px;
+    color: var(--plum);
+  }
+
+  .founder-section__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .founder-section__eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--raspberry);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .founder-section__headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--plum);
+    margin-bottom: 36px;
+  }
+
+  .founder-section__body {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--plum);
+    text-align: left;
+  }
+
+  .founder-section__body p {
+    margin-bottom: 18px;
+  }
+
+  .founder-section__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .founder-section__sign {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--plum);
+    opacity: 0.7;
+    margin-top: 32px;
+    text-align: center;
+  }
 
   /* STATEMENT */
   .statement-section {
@@ -576,7 +708,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
     .hero {
       aspect-ratio: auto;
-      min-height: 90vh;
+      min-height: 75vh;
       max-height: none;
       height: auto;
     }
@@ -609,6 +741,21 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
 
     .features-section { padding: 60px 20px 60px; }
     .features-intro { margin-bottom: 50px; }
+
+    .founder-section { padding: 70px 24px; }
+    .founder-section__body { font-size: 15px; }
+
+    .steps-section { padding: 60px 24px; }
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .steps-section__sub {
+      font-size: 15px;
+      margin-bottom: 48px;
+    }
+    .step__number { font-size: 48px; }
+    .step__heading { font-size: 22px; }
 
     .feature-card {
       grid-template-columns: 1fr;
@@ -693,15 +840,39 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
   </div>
 </section>
 
-<section class="features-section" id="how-it-works">
+<!-- ══════════════ HOW IT WORKS — 3 STEPS ══════════════ -->
+<section class="steps-section" id="how-it-works">
+  <div class="steps-section__inner">
+    <h2 class="steps-section__headline">How it works.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step__number">01</div>
+        <h3 class="step__heading">Tell us about you.</h3>
+        <p class="step__desc">Rate yourself across factors that go beyond dating app filters. Courting style, conflict resolution, humor, jealousy, family dynamics, social habits, independence. The more honest you are, the better.</p>
+      </div>
+      <div class="step">
+        <div class="step__number">02</div>
+        <h3 class="step__heading">Set your standards.</h3>
+        <p class="step__desc">Identify your dealbreakers, what's important, and what's nice to have. Be specific. Be realistic. This is the bar everyone gets measured against.</p>
+      </div>
+      <div class="step">
+        <div class="step__number">03</div>
+        <h3 class="step__heading">Use the tools.</h3>
+        <p class="step__desc">A personalized dating strategy. Bios for the dating apps you already use. Honest read on anyone you're dating. Dating pattern analysis that reveals what you keep tolerating, missing, and getting right.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section" id="features">
   <div class="features-intro">
-    <h2 class="features-intro__headline">How it works.</h2>
+    <h2 class="features-intro__headline">What you get.</h2>
   </div>
 
   <article class="feature-card card--plum">
     <div class="feature-card__text">
-      <h3 class="feature-card__heading">Be honest about yourself — and set your standards.</h3>
-      <p class="feature-card__desc">Rate yourself truthfully on what you bring to a relationship. Then set your minimum baselines for a partner — dealbreakers, what matters most, what's nice to have. Be realistic, not aspirational.</p>
+      <h3 class="feature-card__heading">Set your standards. Get clarity on what you really want.</h3>
+      <p class="feature-card__desc">Rate yourself truthfully on what you bring to a relationship. Then set your minimum baselines for a partner — dealbreakers, what matters most, what's nice to have. Be realistic, not aspirational. Meaningful insight into your standards. Real accountability to yourself.</p>
     </div>
     <div class="feature-card__visual">
       <img src="snippet-1-standards.png" alt="Standards rating scales" class="ui-snippet--tall" />
@@ -728,7 +899,7 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
   <article class="feature-card card--raspberry card--reverse">
     <div class="feature-card__text">
       <h3 class="feature-card__heading">Rate someone you're dating.</h3>
-      <p class="feature-card__desc">Add anyone — current or past. Rate them honestly against your standards. Get an honest read on each person — what's working, what isn't, and the trade-off you're really making.</p>
+      <p class="feature-card__desc">Add anyone — current or past. Rate them honestly against your standards. Get a reality check on each person: where they meet your bar, where they don't, and the trade-off you're really making.</p>
     </div>
     <div class="feature-card__visual">
       <img src="snippet-4-rate.png" alt="Rating someone you're dating" class="ui-snippet--tall right" />
@@ -744,6 +915,19 @@ src="https://www.facebook.com/tr?id=2866975350316414&ev=PageView&noscript=1"
       <img src="snippet-5-patterns.png" alt="Inside your analysis" class="ui-snippet--wide" />
     </div>
   </article>
+</section>
+
+<!-- ══════════════ WHY WE BUILT IT ══════════════ -->
+<section class="founder-section">
+  <div class="founder-section__inner">
+    <p class="founder-section__eyebrow">Why we built UpDate</p>
+    <h2 class="founder-section__headline">Modern dating is overwhelming yet underwhelming.</h2>
+    <div class="founder-section__body">
+      <p>We swipe through endless people and still can't find the right ones.</p>
+      <p>UpDate is different. It focuses on quality, not quantity. You build a comprehensive self-profile across factors that go far beyond the filters. You set your minimum baselines for a partner: what's a dealbreaker, what's important, what's nice to have. It takes real time and honesty.</p>
+      <p>What you get back is a personalized plan instead of generic advice. UpDate works with your dating apps, not against them. It helps you see your worth clearly, identify what actually matters in a partner, and be flexible on what doesn't.</p>
+    </div>
+  </div>
 </section>
 
 <section class="statement-section">
