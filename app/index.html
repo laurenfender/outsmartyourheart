@@ -4775,7 +4775,37 @@ function buildRatingCats() {
 
   // Update bottom buttons
   const nextBtn = document.getElementById('ratingNextBtn');
-  if (nextBtn) nextBtn.innerHTML = step < totalSteps ? 'Save &amp; Continue &rarr;' : 'Run the numbers &rarr;';
+  if (nextBtn) {
+    if (step < totalSteps) {
+      nextBtn.innerHTML = 'Save &amp; Continue &rarr;';
+    } else {
+      // Final step — use person's name for the verdict button
+      const _ratingPerson = APP.people.find(p => p.id === APP.activePersonId);
+      const _personName = _ratingPerson?.name?.trim() || 'them';
+      nextBtn.innerHTML = 'Reality check on ' + _personName + ' &rarr;';
+    }
+  }
+  // Pattern analysis button — only show on final step, only if 3+ people have ratings
+  const stickyInner = document.querySelector('#ratingStickyBtn .sticky-btn-inner');
+  let patternBtn = document.getElementById('ratingPatternBtn');
+  const _ratedCount = (APP.people || []).filter(p => p.ratings && Object.keys(p.ratings).length >= 5).length;
+  if (step === totalSteps && _ratedCount >= 3) {
+    if (!patternBtn && stickyInner) {
+      patternBtn = document.createElement('button');
+      patternBtn.id = 'ratingPatternBtn';
+      patternBtn.style.cssText = 'width:100%;padding:14px 18px;background:rgba(196,16,74,0.1);border:1px solid #C4104A;border-radius:12px;font-size:13px;font-weight:700;color:#C4104A;cursor:pointer;font-family:\'Space Grotesk\',sans-serif;';
+      patternBtn.innerHTML = 'Get dating pattern analysis &rarr;';
+      patternBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showScreen('pattern-analysis');
+      });
+      // Insert before the "Save progress & exit" link (last child)
+      const saveLink = document.getElementById('ratingSave');
+      stickyInner.insertBefore(patternBtn, saveLink);
+    }
+  } else if (patternBtn) {
+    patternBtn.remove();
+  }
   const backBtn = document.getElementById('ratingBack');
   if (backBtn) backBtn.innerHTML = step > 1 ? '&larr; Back' : '&larr; Home';
   // Update top bar
