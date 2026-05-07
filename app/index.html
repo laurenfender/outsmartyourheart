@@ -961,8 +961,9 @@ circle.ring-arc{fill:none;stroke-width:5;stroke-linecap:round;transform:rotate(-
       <h1 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;font-style:italic;color:#2A0A18;line-height:1.4;margin-bottom:32px;">Outsmart your heart.<br>Curate your fate.</h1>
       <form id="loginForm" style="display:flex;flex-direction:column;gap:12px;">
         <div id="loginHeading" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#2A0A18;">Get started</div>
-        <div id="loginSubheading" style="font-family:'Space Grotesk',sans-serif;font-size:13px;color:#5C4A52;line-height:1.5;margin-bottom:4px;">Create your account so your work saves and you can come back anytime.</div>
+        <div id="loginSubheading" style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#2A0A18;line-height:1.4;margin-bottom:8px;">Before you waste 2 hours on a bad date, spend 15 minutes here. Learn what you really want. Date with a plan.</div>
         <input id="loginEmail" type="email" placeholder="Email" required style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
+        <div id="loginEmailNote" style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#7C6770;line-height:1.4;margin-top:-4px;">We use your email to save your progress so you can come back anytime. No spam, ever.</div>
         <input id="loginPassword" type="password" placeholder="Password (6+ characters)" required minlength="6" style="width:100%;padding:13px 16px;background:#fff;border:1px solid #EAD0D8;border-radius:10px;color:#2A0A18;font-size:14px;font-family:'Space Grotesk',sans-serif;box-sizing:border-box;">
         <div id="loginError" style="font-size:12px;color:#C4104A;min-height:18px;line-height:1.5;"></div>
         <button id="loginSubmit" type="submit" style="width:100%;padding:15px;background:#C4104A;border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;font-family:'Space Grotesk',sans-serif;">Create Account →</button>
@@ -10501,6 +10502,7 @@ function wireOneTimeListeners() {
   const errorEl = document.getElementById('loginError');
   const headingEl = document.getElementById('loginHeading');
   const subheadingEl = document.getElementById('loginSubheading');
+  const emailNoteEl = document.getElementById('loginEmailNote');
   const passwordInput = document.getElementById('loginPassword');
   // Default mode: signup (Create Account)
   let isSignIn = false;
@@ -10512,6 +10514,7 @@ function wireOneTimeListeners() {
       // Sign-in mode
       headingEl.textContent = 'Welcome back';
       if (subheadingEl) subheadingEl.style.display = 'none';
+      if (emailNoteEl) emailNoteEl.style.display = 'none';
       submitBtn.textContent = 'Sign in →';
       toggleBtn.textContent = "New here? Create an account";
       passwordInput.placeholder = 'Password';
@@ -10519,6 +10522,7 @@ function wireOneTimeListeners() {
       // Signup mode (Create Account)
       headingEl.textContent = 'Get started';
       if (subheadingEl) subheadingEl.style.display = '';
+      if (emailNoteEl) emailNoteEl.style.display = '';
       submitBtn.textContent = 'Create Account →';
       toggleBtn.textContent = 'Already have an account? Sign in';
       passwordInput.placeholder = 'Password (6+ characters)';
