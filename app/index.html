@@ -9890,13 +9890,23 @@ function openStrategyModal() {
   });
 
   modal.classList.add('open');
+  modal.style.display = '';  // Clear any leftover inline style
   document.getElementById('strategyGo').onclick = () => {
     const selectedId = picker.dataset.selectedId;
     modal.classList.remove('open');
+    modal.style.display = '';
     runPerfectMatch(selectedId);
   };
-  document.getElementById('strategyCancel').onclick = () => modal.classList.remove('open');
-  modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('open'); };
+  document.getElementById('strategyCancel').onclick = () => {
+    modal.classList.remove('open');
+    modal.style.display = '';
+  };
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('open');
+      modal.style.display = '';
+    }
+  };
 }
 
 // ══════════════════════════════════════════════════════
