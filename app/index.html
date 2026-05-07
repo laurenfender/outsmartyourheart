@@ -2878,11 +2878,9 @@ async function renderHome(skipFetch) {
     _comboInner.innerHTML = _chtml;
     document.getElementById('homeStrategyBtn')?.addEventListener('click', function(e) {
       e.stopPropagation();
-      // Open strategy modal / navigate to perfect-match screen
-      const strategyModal = document.getElementById('strategyModal');
-      if (strategyModal) {
-        strategyModal.style.display = 'flex';
-        if (typeof renderStrategyProfilePicker === 'function') renderStrategyProfilePicker();
+      // Use the proper opener function which wires up button handlers
+      if (typeof openStrategyModal === 'function') {
+        openStrategyModal();
       } else {
         showScreen('perfect-match');
       }
