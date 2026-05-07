@@ -2872,19 +2872,9 @@ async function renderHome(skipFetch) {
     } else {
       _chtml = '<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px;">Setup complete &#10003;</div>';
       _chtml += '<div style="height:4px;background:rgba(255,255,255,0.1);border-radius:100px;overflow:hidden;margin-bottom:14px;"><div style="height:100%;width:100%;background:#00C880;border-radius:100px;"></div></div>';
-      _chtml += '<div id="homeStrategyBtn" style="width:100%;padding:14px 16px;background:#C4104A;border:none;border-radius:12px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;font-family:\'Space Grotesk\',sans-serif;text-align:center;margin-bottom:8px;">See Your Strategy &rarr;</div>';
-      _chtml += '<div id="homeCombinedSetupBtn" data-review="1" style="width:100%;padding:11px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:12px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);cursor:pointer;font-family:\'Space Grotesk\',sans-serif;text-align:center;">Review &amp; Edit Setup</div>';
+      _chtml += '<div id="homeCombinedSetupBtn" data-review="1" style="width:100%;padding:14px 16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:12px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;font-family:\'Space Grotesk\',sans-serif;text-align:center;">Review &amp; Edit &rarr;</div>';
     }
     _comboInner.innerHTML = _chtml;
-    document.getElementById('homeStrategyBtn')?.addEventListener('click', function(e) {
-      e.stopPropagation();
-      // Use the proper opener function which wires up button handlers
-      if (typeof openStrategyModal === 'function') {
-        openStrategyModal();
-      } else {
-        showScreen('perfect-match');
-      }
-    });
     document.getElementById('homeCombinedSetupBtn')?.addEventListener('click', function(e) {
       e.stopPropagation();
       // If reviewing a completed setup, reset to step 1 so they review from the beginning
