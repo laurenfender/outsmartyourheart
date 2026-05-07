@@ -2942,6 +2942,17 @@ async function renderHome(skipFetch) {
   const addPersonBtn = document.getElementById('homeAddPersonBtn');
   peopleSection.style.display = '';
   addPersonBtn.style.display = '';
+  // Gate visual: lock the Add Person card if setup isn't complete
+  const _selfCount_apb = APP.self ? Object.keys(APP.self).filter(k => APP.self[k] != null && APP.self[k] !== '').length : 0;
+  const _prefsCount_apb = (APP.profiles && APP.profiles[0] && APP.profiles[0].prefs) ? Object.keys(APP.profiles[0].prefs).filter(function(k){ return APP.profiles[0].prefs[k] != null; }).length : 0;
+  const _setupComplete_apb = _selfCount_apb >= 10 && _prefsCount_apb >= 20;
+  if (!_setupComplete_apb) {
+    addPersonBtn.style.opacity = '0.45';
+    addPersonBtn.innerHTML = '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div><div style="font-size:14px;font-weight:500;color:#fff;font-family:\'Space Grotesk\',sans-serif;">Add a person</div><div style="font-size:12px;color:rgba(255,255,255,0.5);font-family:\'Space Grotesk\',sans-serif;font-weight:300;">Finish your setup first</div></div>';
+  } else {
+    addPersonBtn.style.opacity = '';
+    addPersonBtn.innerHTML = '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;color:rgba(255,255,255,0.8);flex-shrink:0;">＋</div><div><div style="font-size:14px;font-weight:500;color:#fff;font-family:\'Space Grotesk\',sans-serif;">Add a person</div><div style="font-size:12px;color:rgba(255,255,255,0.5);font-family:\'Space Grotesk\',sans-serif;font-weight:300;">Current, past, or anyone you\'ve dated</div></div>';
+  }
   if (!APP.profiles.length) {
     // Show people but without scoring/analysis
     if (!APP.people.length) { peopleList.innerHTML = ''; return; }
@@ -3111,7 +3122,24 @@ document.addEventListener('click', e => {
     document.getElementById('templateModal').classList.remove('open');
   }
 });
-document.getElementById('homeAddPersonBtn')?.addEventListener('click', (e) => { e.stopPropagation(); openPersonForm(null); });
+document.getElementById('homeAddPersonBtn')?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  // Gate: must complete self-profile + standards before rating people
+  const _selfRatedCount = APP.self ? Object.keys(APP.self).filter(k => APP.self[k] != null && APP.self[k] !== '').length : 0;
+  const _prefsCount = (APP.profiles && APP.profiles[0] && APP.profiles[0].prefs) ? Object.keys(APP.profiles[0].prefs).filter(function(k){ return APP.profiles[0].prefs[k] != null; }).length : 0;
+  const _isSetupComplete = _selfRatedCount >= 10 && _prefsCount >= 20;
+  if (!_isSetupComplete) {
+    toast('Finish your setup first — your self-profile and standards.');
+    // Resume their setup where they left off
+    if (typeof openCombinedSetup === 'function') {
+      openCombinedSetup();
+    } else {
+      showScreen('home');
+    }
+    return;
+  }
+  openPersonForm(null);
+});
 // ══════════════════════════════════════════════════════
 // PROFILE EDITOR
 // ══════════════════════════════════════════════════════
